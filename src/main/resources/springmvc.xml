@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+     
+     <!-- 扫描注解 -->  
+     <context:component-scan base-package="com.zq.controller"></context:component-scan>
+  	<!-- 配置注解的适配器  映射器
+  	  提供了对json 的支持  
+  	 -->
+  	<!-- <mvc:annotation-driven></mvc:annotation-driven> -->
+  	<!-- 映射器 -->
+  	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+  	</bean>
+  	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+  	</bean> -->
+  	<mvc:annotation-driven></mvc:annotation-driven>
+  	<!-- 静态资源访问(加了下面一两句配置后静态资源不在需要拦截到spring容器中做映射处理) -->
+  	 <mvc:resources location="/static/" mapping="/static/**" />
+ 	<!--  <mvc:resources location="/" mapping="/**" /> -->
+ 	
+  	<!-- 视图解析器 -->
+  	<!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+   	 	<property name="suffix" value=".jsp"></property>
+   	 	<property name="prefix" value="/WEB-INF/jsp/"></property>
+   	 </bean> -->
+  
+  	<!-- freemarker -->
+  	<!-- PropertyPlaceholderConfigurer 加载properties文件 -->
+  	<bean id="freemarkerProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:freemaker-variable.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- freemarker 配置
+		配置静态页面  数据的相关格式
+	 -->
+
+	<bean id="freemarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<!-- templateLoaderPath:位置 -->
+		<property name="templateLoaderPath" value="/WEB-INF/jsp/" />
+		<!-- 配置编码 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 设置 -->
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">10</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="number_format">#.##</prop>
+			</props>
+		</property>
+		 <property name="freemarkerVariables">
+			<map>
+				<!-- 页面可以根据  proPath得到项目的名称 -->
+				<entry key="proPath" value="${proPath}"></entry>
+			</map>
+		</property> 
+	</bean>
+
+	<!-- 配置FreeMark视图解析器 -->
+	<bean id="freeMarkerViewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<property name="suffix" value=".ftl" /><!-- .ftl结尾的文件可以使用freemarker -->
+		<property name="cache" value="true" />
+		<property name="exposeSessionAttributes" value="true" />
+		<property name="exposeRequestAttributes" value="true" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="allowSessionOverride" value="true" />
+		<property name="order" value="20" />
+	</bean>
+  
+  </beans>

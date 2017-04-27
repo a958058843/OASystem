@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.mapper.RoleMenuRelMapper" >
+  <resultMap id="BaseResultMap" type="com.zq.pojo.RoleMenuRel" >
+    <id column="ROLE_MENU_REL" property="roleMenuRel" jdbcType="BIGINT" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="MENU_ID" property="menuId" jdbcType="BIGINT" />
+    <result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROLE_MENU_REL, ROLE_ID, MENU_ID, CREATED_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_menu_rel
+    where ROLE_MENU_REL = #{roleMenuRel,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role_menu_rel
+    where ROLE_MENU_REL = #{roleMenuRel,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zq.pojo.RoleMenuRel" >
+    insert into sys_role_menu_rel (ROLE_MENU_REL, ROLE_ID, MENU_ID, 
+      CREATED_DATE)
+    values (#{roleMenuRel,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT}, 
+      #{createdDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zq.pojo.RoleMenuRel" >
+    insert into sys_role_menu_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleMenuRel != null" >
+        ROLE_MENU_REL,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="menuId != null" >
+        MENU_ID,
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleMenuRel != null" >
+        #{roleMenuRel,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null" >
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zq.pojo.RoleMenuRel" >
+    update sys_role_menu_rel
+    <set >
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null" >
+        MENU_ID = #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ROLE_MENU_REL = #{roleMenuRel,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zq.pojo.RoleMenuRel" >
+    update sys_role_menu_rel
+    set ROLE_ID = #{roleId,jdbcType=BIGINT},
+      MENU_ID = #{menuId,jdbcType=BIGINT},
+      CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+    where ROLE_MENU_REL = #{roleMenuRel,jdbcType=BIGINT}
+  </update>
+</mapper>

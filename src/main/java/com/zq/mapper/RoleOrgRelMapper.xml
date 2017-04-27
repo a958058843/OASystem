@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.mapper.RoleOrgRelMapper" >
+  <resultMap id="BaseResultMap" type="com.zq.pojo.RoleOrgRel" >
+    <id column="ROLE_ORG_REL_ID" property="roleOrgRelId" jdbcType="BIGINT" />
+    <result column="ROLE_ID" property="roleId" jdbcType="BIGINT" />
+    <result column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+    <result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ROLE_ORG_REL_ID, ROLE_ID, ORG_ID, CREATED_DATE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_org_rel
+    where ROLE_ORG_REL_ID = #{roleOrgRelId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_role_org_rel
+    where ROLE_ORG_REL_ID = #{roleOrgRelId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zq.pojo.RoleOrgRel" >
+    insert into sys_role_org_rel (ROLE_ORG_REL_ID, ROLE_ID, ORG_ID, 
+      CREATED_DATE)
+    values (#{roleOrgRelId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{orgId,jdbcType=BIGINT}, 
+      #{createdDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zq.pojo.RoleOrgRel" >
+    insert into sys_role_org_rel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleOrgRelId != null" >
+        ROLE_ORG_REL_ID,
+      </if>
+      <if test="roleId != null" >
+        ROLE_ID,
+      </if>
+      <if test="orgId != null" >
+        ORG_ID,
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleOrgRelId != null" >
+        #{roleOrgRelId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zq.pojo.RoleOrgRel" >
+    update sys_role_org_rel
+    <set >
+      <if test="roleId != null" >
+        ROLE_ID = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="orgId != null" >
+        ORG_ID = #{orgId,jdbcType=BIGINT},
+      </if>
+      <if test="createdDate != null" >
+        CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ROLE_ORG_REL_ID = #{roleOrgRelId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zq.pojo.RoleOrgRel" >
+    update sys_role_org_rel
+    set ROLE_ID = #{roleId,jdbcType=BIGINT},
+      ORG_ID = #{orgId,jdbcType=BIGINT},
+      CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP}
+    where ROLE_ORG_REL_ID = #{roleOrgRelId,jdbcType=BIGINT}
+  </update>
+  <select id="findRolesByOrgId" parameterType="Long" resultType="String">
+  	select GROUP_CONCAT(distinct role_id) as roles from sys_role_org_rel where ORG_ID = 24
+  </select>
+</mapper>

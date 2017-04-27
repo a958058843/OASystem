@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.mapper.MenuMapper">
+	<resultMap id="BaseResultMap" type="com.zq.pojo.Menu">
+		<id column="MENU_ID" property="menuId" jdbcType="BIGINT" />
+		<result column="MENU_PARENT_ID" property="menuParentId"
+			jdbcType="BIGINT" />
+		<result column="MENU_NAME" property="menuName" jdbcType="CHAR" />
+		<result column="MENU_TYPE" property="menuType" jdbcType="SMALLINT" />
+		<result column="MENU_PATH" property="menuPath" jdbcType="CHAR" />
+		<result column="DESC_CONTENT" property="descContent" jdbcType="VARCHAR" />
+		<result column="IS_PUBLISH" property="isPublish" jdbcType="SMALLINT" />
+		<result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		M.MENU_ID, MENU_PARENT_ID, MENU_NAME, MENU_TYPE, MENU_PATH, DESC_CONTENT,
+		IS_PUBLISH
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_menu
+		where MENU_ID = #{menuId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_menu
+		where MENU_ID = #{menuId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.zq.pojo.Menu">
+		insert into sys_menu (MENU_ID,
+		MENU_PARENT_ID, MENU_NAME,
+		MENU_TYPE, MENU_PATH, DESC_CONTENT,
+		IS_PUBLISH, CREATED_DATE)
+		values (#{menuId,jdbcType=BIGINT},
+		#{menuParentId,jdbcType=BIGINT},
+		#{menuName,jdbcType=CHAR},
+		#{menuType,jdbcType=SMALLINT}, #{menuPath,jdbcType=CHAR},
+		#{descContent,jdbcType=VARCHAR},
+		#{isPublish,jdbcType=SMALLINT},
+		#{createdDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.zq.pojo.Menu">
+		insert into sys_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				MENU_ID,
+			</if>
+			<if test="menuParentId != null">
+				MENU_PARENT_ID,
+			</if>
+			<if test="menuName != null">
+				MENU_NAME,
+			</if>
+			<if test="menuType != null">
+				MENU_TYPE,
+			</if>
+			<if test="menuPath != null">
+				MENU_PATH,
+			</if>
+			<if test="descContent != null">
+				DESC_CONTENT,
+			</if>
+			<if test="isPublish != null">
+				IS_PUBLISH,
+			</if>
+			<if test="createdDate != null">
+				CREATED_DATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="menuId != null">
+				#{menuId,jdbcType=BIGINT},
+			</if>
+			<if test="menuParentId != null">
+				#{menuParentId,jdbcType=BIGINT},
+			</if>
+			<if test="menuName != null">
+				#{menuName,jdbcType=CHAR},
+			</if>
+			<if test="menuType != null">
+				#{menuType,jdbcType=SMALLINT},
+			</if>
+			<if test="menuPath != null">
+				#{menuPath,jdbcType=CHAR},
+			</if>
+			<if test="descContent != null">
+				#{descContent,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublish != null">
+				#{isPublish,jdbcType=SMALLINT},
+			</if>
+			<if test="createdDate != null">
+				#{createdDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zq.pojo.Menu">
+		update sys_menu
+		<set>
+			<if test="menuParentId != null">
+				MENU_PARENT_ID = #{menuParentId,jdbcType=BIGINT},
+			</if>
+			<if test="menuName != null">
+				MENU_NAME = #{menuName,jdbcType=CHAR},
+			</if>
+			<if test="menuType != null">
+				MENU_TYPE = #{menuType,jdbcType=SMALLINT},
+			</if>
+			<if test="menuPath != null">
+				MENU_PATH = #{menuPath,jdbcType=CHAR},
+			</if>
+			<if test="descContent != null">
+				DESC_CONTENT = #{descContent,jdbcType=VARCHAR},
+			</if>
+			<if test="isPublish != null">
+				IS_PUBLISH = #{isPublish,jdbcType=SMALLINT},
+			</if>
+			<if test="createdDate != null">
+				CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where MENU_ID = #{menuId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.zq.pojo.Menu">
+		update sys_menu
+		set MENU_PARENT_ID = #{menuParentId,jdbcType=BIGINT},
+		MENU_NAME =
+		#{menuName,jdbcType=CHAR},
+		MENU_TYPE = #{menuType,jdbcType=SMALLINT},
+		MENU_PATH = #{menuPath,jdbcType=CHAR},
+		DESC_CONTENT =
+		#{descContent,jdbcType=VARCHAR},
+		IS_PUBLISH =
+		#{isPublish,jdbcType=SMALLINT},
+		CREATED_DATE =
+		#{createdDate,jdbcType=TIMESTAMP}
+		where MENU_ID =
+		#{menuId,jdbcType=BIGINT}
+	</update>
+	<!-- 根据角色编号查询该用户具有的权限菜单 -->
+	<select id="findAuthorizationMenuByRoleId" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select distinct
+		<include refid="Base_Column_List" />
+		from SYS_MENU M,SYS_ROLE_MENU_REL R
+		where R.MENU_ID = M.MENU_ID AND
+		IS_PUBLISH =1
+		and ROLE_ID in
+		<foreach item="item" collection="roles" open="(" close=")"
+			separator=",">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

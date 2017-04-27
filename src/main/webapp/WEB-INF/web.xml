@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	 
+	 	<!-- spring的配置文件 -->
+   	<context-param>
+   		<param-name>contextConfigLocation</param-name>
+   		<param-value>classpath*:spring.xml</param-value>
+   	</context-param>
+	 <!-- spring 的监听器 -->
+	 <listener>
+	 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	 </listener>
+   <!-- SPRING MVC -->
+   <servlet>
+	   	<servlet-name>springmvc</servlet-name>
+	   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  		<!-- 配置springmvc的配置文件  默认：WEB-INF/springmvc-servlet.xml -->
+  		<init-param>
+  			<param-name>contextConfigLocation</param-name>
+  			<param-value>classpath*:springmvc.xml</param-value>
+  		</init-param>
+   </servlet>
+   <servlet-mapping>
+   		<servlet-name>springmvc</servlet-name>
+   		<url-pattern>*.do</url-pattern>	
+   </servlet-mapping>
+   <servlet-mapping>
+   		<servlet-name>springmvc</servlet-name>
+   		<url-pattern>/rest/*</url-pattern>	
+   </servlet-mapping>
+   	
+</web-app>

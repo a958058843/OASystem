@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zq.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.zq.pojo.User">
+		<id column="USER_ID" property="userId" jdbcType="BIGINT" />
+		<result column="ORG_ID" property="orgId" jdbcType="BIGINT" />
+		<result column="USER_NAME" property="userName" jdbcType="CHAR" />
+		<result column="USER_PASSWORD" property="userPassword"
+			jdbcType="CHAR" />
+		<result column="MOBILE_PHONE" property="mobilePhone" jdbcType="CHAR" />
+		<result column="EMAIL" property="email" jdbcType="CHAR" />
+		<result column="USER_CH_NAME" property="userChName" jdbcType="CHAR" />
+		<result column="USER_BIRTHDAY" property="userBirthday"
+			jdbcType="DATE" />
+		<result column="USER_SEX" property="userSex" jdbcType="SMALLINT" />
+		<result column="USER_PHOTO_URL" property="userPhotoUrl"
+			jdbcType="CHAR" />
+		<result column="PROVINCE_ID" property="provinceId" jdbcType="INTEGER" />
+		<result column="PROVINCE_NAME" property="provinceName"
+			jdbcType="CHAR" />
+		<result column="CITY_ID" property="cityId" jdbcType="INTEGER" />
+		<result column="CITY_NAME" property="cityName" jdbcType="CHAR" />
+		<result column="COUNTRY_ID" property="countryId" jdbcType="INTEGER" />
+		<result column="CONTRY_NAME" property="contryName" jdbcType="CHAR" />
+		<result column="HOBBY" property="hobby" jdbcType="CHAR" />
+		<result column="INTRODUCE" property="introduce" jdbcType="VARCHAR" />
+		<result column="CREATED_DATE" property="createdDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		USER_ID, ORG_ID, USER_NAME, USER_PASSWORD, MOBILE_PHONE,
+		EMAIL, USER_CH_NAME,
+		USER_BIRTHDAY,
+		USER_SEX, USER_PHOTO_URL,
+		PROVINCE_ID, PROVINCE_NAME, CITY_ID, CITY_NAME,
+		COUNTRY_ID,
+		CONTRY_NAME, HOBBY, INTRODUCE, CREATED_DATE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where USER_ID = #{userId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		sys_user
+		where USER_ID = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="java.util.Map">
+		insert into sys_user (
+		ORG_ID,
+		USER_NAME,
+		USER_PASSWORD, MOBILE_PHONE, EMAIL,
+		USER_CH_NAME,
+		USER_BIRTHDAY, USER_SEX,
+		USER_PHOTO_URL, PROVINCE_ID, PROVINCE_NAME,
+		CITY_ID, CITY_NAME, COUNTRY_ID,
+		CONTRY_NAME, HOBBY, INTRODUCE,
+		CREATED_DATE)
+		values (
+		#{orgId,jdbcType=BIGINT},
+		#{userName,jdbcType=CHAR},
+		#{userPassword,jdbcType=CHAR},
+		#{mobilePhone,jdbcType=CHAR},
+		#{email,jdbcType=CHAR},
+		#{userChName,jdbcType=CHAR},
+		#{userBirthday,jdbcType=DATE},
+		#{userSex,jdbcType=SMALLINT},
+		#{userPhotoUrl,jdbcType=CHAR},
+		#{provinceId,jdbcType=INTEGER},
+		#{provinceName,jdbcType=CHAR},
+		#{cityId,jdbcType=INTEGER},
+		#{cityName,jdbcType=CHAR},
+		#{countryId,jdbcType=INTEGER},
+		#{contryName,jdbcType=CHAR},
+		#{hobby,jdbcType=CHAR},
+		#{introduce,jdbcType=VARCHAR},
+		#{createdDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.zq.pojo.User">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="orgId != null">
+				ORG_ID,
+			</if>
+			<if test="userName != null">
+				USER_NAME,
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD,
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE,
+			</if>
+			<if test="email != null">
+				EMAIL,
+			</if>
+			<if test="userChName != null">
+				USER_CH_NAME,
+			</if>
+			<if test="userBirthday != null">
+				USER_BIRTHDAY,
+			</if>
+			<if test="userSex != null">
+				USER_SEX,
+			</if>
+			<if test="userPhotoUrl != null">
+				USER_PHOTO_URL,
+			</if>
+			<if test="provinceId != null">
+				PROVINCE_ID,
+			</if>
+			<if test="provinceName != null">
+				PROVINCE_NAME,
+			</if>
+			<if test="cityId != null">
+				CITY_ID,
+			</if>
+			<if test="cityName != null">
+				CITY_NAME,
+			</if>
+			<if test="countryId != null">
+				COUNTRY_ID,
+			</if>
+			<if test="contryName != null">
+				CONTRY_NAME,
+			</if>
+			<if test="hobby != null">
+				HOBBY,
+			</if>
+			<if test="introduce != null">
+				INTRODUCE,
+			</if>
+			<if test="createdDate != null">
+				CREATED_DATE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=CHAR},
+			</if>
+			<if test="userPassword != null">
+				#{userPassword,jdbcType=CHAR},
+			</if>
+			<if test="mobilePhone != null">
+				#{mobilePhone,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=CHAR},
+			</if>
+			<if test="userChName != null">
+				#{userChName,jdbcType=CHAR},
+			</if>
+			<if test="userBirthday != null">
+				#{userBirthday,jdbcType=DATE},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=SMALLINT},
+			</if>
+			<if test="userPhotoUrl != null">
+				#{userPhotoUrl,jdbcType=CHAR},
+			</if>
+			<if test="provinceId != null">
+				#{provinceId,jdbcType=INTEGER},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName,jdbcType=CHAR},
+			</if>
+			<if test="cityId != null">
+				#{cityId,jdbcType=INTEGER},
+			</if>
+			<if test="cityName != null">
+				#{cityName,jdbcType=CHAR},
+			</if>
+			<if test="countryId != null">
+				#{countryId,jdbcType=INTEGER},
+			</if>
+			<if test="contryName != null">
+				#{contryName,jdbcType=CHAR},
+			</if>
+			<if test="hobby != null">
+				#{hobby,jdbcType=CHAR},
+			</if>
+			<if test="introduce != null">
+				#{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				#{createdDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.zq.pojo.User">
+		update sys_user
+		<set>
+			<if test="orgId != null">
+				ORG_ID = #{orgId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null">
+				USER_NAME = #{userName,jdbcType=CHAR},
+			</if>
+			<if test="userPassword != null">
+				USER_PASSWORD = #{userPassword,jdbcType=CHAR},
+			</if>
+			<if test="mobilePhone != null">
+				MOBILE_PHONE = #{mobilePhone,jdbcType=CHAR},
+			</if>
+			<if test="email != null">
+				EMAIL = #{email,jdbcType=CHAR},
+			</if>
+			<if test="userChName != null">
+				USER_CH_NAME = #{userChName,jdbcType=CHAR},
+			</if>
+			<if test="userBirthday != null">
+				USER_BIRTHDAY = #{userBirthday,jdbcType=DATE},
+			</if>
+			<if test="userSex != null">
+				USER_SEX = #{userSex,jdbcType=SMALLINT},
+			</if>
+			<if test="userPhotoUrl != null">
+				USER_PHOTO_URL = #{userPhotoUrl,jdbcType=CHAR},
+			</if>
+			<if test="provinceId != null">
+				PROVINCE_ID = #{provinceId,jdbcType=INTEGER},
+			</if>
+			<if test="provinceName != null">
+				PROVINCE_NAME = #{provinceName,jdbcType=CHAR},
+			</if>
+			<if test="cityId != null">
+				CITY_ID = #{cityId,jdbcType=INTEGER},
+			</if>
+			<if test="cityName != null">
+				CITY_NAME = #{cityName,jdbcType=CHAR},
+			</if>
+			<if test="countryId != null">
+				COUNTRY_ID = #{countryId,jdbcType=INTEGER},
+			</if>
+			<if test="contryName != null">
+				CONTRY_NAME = #{contryName,jdbcType=CHAR},
+			</if>
+			<if test="hobby != null">
+				HOBBY = #{hobby,jdbcType=CHAR},
+			</if>
+			<if test="introduce != null">
+				INTRODUCE = #{introduce,jdbcType=VARCHAR},
+			</if>
+			<if test="createdDate != null">
+				CREATED_DATE = #{createdDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where USER_ID = #{userId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="java.util.Map">
+		update sys_user
+		set ORG_ID = #{orgId,jdbcType=BIGINT},
+		USER_NAME =
+		#{userName,jdbcType=CHAR},
+		USER_PASSWORD =
+		#{userPassword,jdbcType=CHAR},
+		MOBILE_PHONE =
+		#{mobilePhone,jdbcType=CHAR},
+		EMAIL = #{email,jdbcType=CHAR},
+		USER_CH_NAME = #{userChName,jdbcType=CHAR},
+		USER_BIRTHDAY =
+		#{userBirthday,jdbcType=DATE},
+		USER_SEX = #{userSex,jdbcType=SMALLINT},
+		USER_PHOTO_URL = #{userPhotoUrl,jdbcType=CHAR},
+		PROVINCE_ID =
+		#{provinceId,jdbcType=INTEGER},
+		PROVINCE_NAME =
+		#{provinceName,jdbcType=CHAR},
+		CITY_ID = #{cityId,jdbcType=INTEGER},
+		CITY_NAME = #{cityName,jdbcType=CHAR},
+		COUNTRY_ID =
+		#{countryId,jdbcType=INTEGER},
+		CONTRY_NAME =
+		#{contryName,jdbcType=CHAR},
+		HOBBY = #{hobby,jdbcType=CHAR},
+		INTRODUCE =
+		#{introduce,jdbcType=VARCHAR},
+		CREATED_DATE =
+		#{createdDate,jdbcType=TIMESTAMP}
+		where USER_ID =
+		#{userId,jdbcType=BIGINT}
+	</update>
+	<!-- 登录的查询的方法 resultType user_id userID -->
+	<select id="selectByUser" parameterType="com.zq.pojo.User"
+		resultMap="BaseResultMap">
+		select * from sys_user where user_name=#{userName} and
+		user_password=#{userPassword}
+	</select>
+	<sql id="whereClause">
+		<where>
+			<!-- 条件：条件查询的参数的map的键 -->
+			<if test="orgId != null and orgId !=''">
+				and ORG_ID = #{orgId,jdbcType=BIGINT}
+			</if>
+			<if test="mobilePhone != null and mobilePhone !=''">
+				and MOBILE_PHONE like
+				concat('%',#{mobilePhone,jdbcType=CHAR},'%')
+			</if>
+			<if test="userChName != null and userChName !='' ">
+				and USER_CH_NAME like
+				concat('%',#{userChName,jdbcType=CHAR},'%')
+			</if>
+			<if test="provinceId != null  and provinceId != '' ">
+				and PROVINCE_ID = #{provinceId,jdbcType=INTEGER}
+			</if>
+		</where>
+	</sql>
+	<!-- 分页查询 -->
+	<select id="findPageUser" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"></include>
+		from Sys_user
+		<include refid="whereClause"></include>
+		limit #{startIndex},#{pageSize}
+	</select>
+	<select id="getTotalCount" parameterType="java.util.Map"
+		resultType="java.lang.Long">
+		select count(*)
+		from Sys_user
+		<include refid="whereClause"></include>
+	</select>
+	<select id="exportUser" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select USER_CH_NAME as userChName,USER_SEX as userSex
+		,MOBILE_PHONE as mobilePhone,EMAIL as email
+		,PROVINCE_NAME as provinceName, CITY_NAME as cityName
+		,CONTRY_NAME as contryName,USER_BIRTHDAY as userBirthday,O.ORG_NAME orgName
+		from sys_user U,sys_org O
+		where U.ORG_ID = O.ORG_ID
+		<!-- 条件：条件查询的参数的map的键 -->
+		<if test="orgId != null and orgId !=''">
+			and ORG_ID = #{orgId,jdbcType=BIGINT}
+		</if>
+		<if test="mobilePhone != null and mobilePhone !=''">
+			and MOBILE_PHONE like concat('%',#{mobilePhone,jdbcType=CHAR},'%')
+		</if>
+		<if test="userChName != null and userChName !='' ">
+			and USER_CH_NAME like concat('%',#{userChName,jdbcType=CHAR},'%')
+		</if>
+		<if test="provinceId != null  and provinceId != '' ">
+			and PROVINCE_ID = #{provinceId,jdbcType=INTEGER}
+		</if>
+	</select>
+	<insert id="importUser" parameterType="java.util.List" >
+		 insert into sys_user (
+      ORG_ID, 
+      USER_NAME, 
+      USER_PASSWORD, 
+      MOBILE_PHONE, 
+      EMAIL, 
+      USER_CH_NAME, 
+      USER_SEX, 
+      CREATED_DATE<!-- ,
+      PROVINCE_ID,
+      PROVINCE_NAME,
+      CITY_ID, 
+      CITY_NAME -->
+      )values
+      <foreach collection="list" item="user" index="index" separator =",">
+      	(
+           #{user.orgId},
+           #{user.userName},
+           '123456',
+           #{user.mobilePhone},
+           #{user.email},
+           #{user.userChName},
+           #{user.userSex},
+           now()<!-- ,
+           #{user.provinceId},
+           #{user.provinceName},
+           #{user.cityId},
+           #{user.cityName} -->
+          )
+      </foreach>
+	</insert>
+	 <select id="selectBarProviceSexInfo" resultType="java.util.Map">
+ 	 SELECT PROVINCE_NAME as provinceName
+    ,SUM( CASE WHEN USER_SEX = 1 THEN 1 ELSE 0 END ) AS boy
+    , SUM( CASE WHEN USER_SEX = 2 THEN 1 ELSE 0 END ) AS girl
+    , SUM( CASE WHEN USER_SEX = 3 THEN 1 ELSE 0 END ) AS secrecy 
+    FROM sys_user GROUP BY PROVINCE_NAME
+ </select>
+ <select id="selectProvinceInfo" resultType="java.util.Map">
+ 	select PROVINCE_NAME name,SUM(1) value from sys_user group by PROVINCE_NAME
+ </select>
+</mapper>
